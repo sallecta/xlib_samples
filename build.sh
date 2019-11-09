@@ -28,7 +28,8 @@ fn_buildobj() {
 	else
 		echo "    $me:  Custom llinker options file found [$customLinkerFile]"
 		source $customLinkerFile
-		fn_stopifempty "$optionsLinkerCustom" "optionsLinkerCustom"
+		fn_errorifempty "$optionsLinkerCustom" "optionsLinkerCustom"
+		fn_stoponerror "$?" $LINENO
 		optionsLinker="$optionsLinkerCustom" # located in $customLinkerFile
 	fi
 	cmd="gcc $srcdir/$name.$srcMainMarker -c -o $dirbuildobj/$name.o $optionsLinker"
@@ -55,7 +56,8 @@ fn_buildexe() {
 	else
 		echo "    $me:  Custom llinker options file found [$customLinkerFile]"
 		source $customLinkerFile
-		fn_stopifempty "$optionsLinkerCustom" "optionsLinkerCustom"
+		fn_errorifempty "$optionsLinkerCustom" "optionsLinkerCustom"
+		fn_stoponerror "$?" $LINENO
 		optionsLinker="$optionsLinkerCustom" # located in $customLinkerFile
 	fi
 

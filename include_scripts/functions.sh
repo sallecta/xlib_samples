@@ -10,7 +10,7 @@ fn_echobold() {
 fn_stoponerror () {
 if [ $1 -ne 0 ]; then
         lNo=$(expr $2 - 1)
-        echo "  [Error at line No $lNo. $2]"
+        echo "  [Error at line No $lNo.]"
         exit
 else
    echo "    [Success]"
@@ -37,10 +37,13 @@ if [ ! -f "$1" ]; then
 fi
 }
 
-fn_stopifempty () {
+fn_errorifempty () {
 if [  "$1" = "" ]; then
         echo "  [Error. Variable [$2] is empty]"
-        exit
+        return 1
+elif [  "$2" = "" ]; then
+        echo "  [Error. Missed 2nd argument]"
+        return 1
 fi
 }
 

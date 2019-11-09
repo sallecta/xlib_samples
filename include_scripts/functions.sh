@@ -37,6 +37,13 @@ if [ ! -f "$1" ]; then
 fi
 }
 
+fn_stopifempty () {
+if [  "$1" = "" ]; then
+        echo "  [Error. Variable [$2] is empty]"
+        exit
+fi
+}
+
 fn_run() {
 	app=$1
     set -x #echo on

@@ -5,8 +5,12 @@ dirbuild="$PWD/out"
 dirbuildexe="$dirbuild/exe"
 dirbuildobj="$dirbuild/obj"
 srcdir="$PWD/src"
-srcMainMarker="main.c" # if file ends with ".$srcMainMarker", it will be processed
+srcMainMarker="00.c" # if file ends with ".$srcMainMarker", it will be processed
 srcFilesMask="$srcdir/*.$srcMainMarker"
+srcCustomLinkerObjMark="$srcMainMarker.customLinkerObj.sh"
+srcCustomLinkerExeMark="$srcMainMarker.customLinkerExe.sh"
+optionsLinkerObjCommon="-lX11"
+optionsLinkerExeCommon="-lX11"
 
 #end configs
 
@@ -16,11 +20,25 @@ fn_buildobj() {
 	me="fn_buildobj"
 	name=$1
 	printf "\n"
-	fn_echobold "    $me: Creating obj file from $name..$srcMainMarker"
-	cmd="gcc $srcdir/$name.$srcMainMarker -c -o $dirbuildobj/$name.o -lX11"
+	fn_echobold "    $me: Creating obj file from $name.$srcMainMarker"
+    customLinkerFile="$srcdir/$name.$srcCustomLinkerObjMark"
+	if [ ! -f "$customxLinkerFile" ]; then
+        echo "    $me: No custom linker options file found [$customLinkerFile]"
+		optionsLinker=$optionsLinkerObjCommon
+	else
+		echo "    $me:  Custom llinker options file found [$customLinkerFile]"
+		source $customLinkerFile
+		fn_stopifempty "$optionsLinkerCustom" "optionsLinkerCustom"
+		optionsLinker="$optionsLinkerCustom" # located in $customLinkerFile
+	fi
+	cmd="gcc $srcdir/$name.$srcMainMarker -c -o $dirbuildobj/$name.o $optionsLinker"
 	echo $cmd
 	$cmd
 	excode=$?
+
+	optionsLinker=""
+	optionsLinkerCustom=""
+
 	return $excode
 }
 
@@ -29,22 +47,26 @@ fn_buildexe() {
 	name=$1
 	printf "\n"
 	fn_echobold "    $me: Creating exe file from $name..$srcMainMarker"
-	cmd="gcc $dirbuildobj/$name.o -o $dirbuildexe/$name -lX11"
-	echo $cmd
-	$cmd
-	excode=$?
-	return $excode
-}
 
-fn_cpresources() {
-	me="fn_cpresources"
-	name=$1
-	printf "\n"
-	fn_echobold "$me: Copying resource folder $name to exe dir"
-	cmd="cp $name/* $dirbuildexe"
+    customLinkerFile="$srcdir/$name.$srcCustomLinkerExeMark"
+	if [ ! -f "$customLinkerFile" ]; then
+        echo "    $me: No custom linker options file found [$customLinkerFile]"
+		optionsLinker=$optionsLinkerExeCommon
+	else
+		echo "    $me:  Custom llinker options file found [$customLinkerFile]"
+		source $customLinkerFile
+		fn_stopifempty "$optionsLinkerCustom" "optionsLinkerCustom"
+		optionsLinker="$optionsLinkerCustom" # located in $customLinkerFile
+	fi
+
+	cmd="gcc $dirbuildobj/$name.o -o $dirbuildexe/$name $optionsLinker"
 	echo $cmd
 	$cmd
 	excode=$?
+
+	optionsLinker=""
+	optionsLinkerCustom=""
+
 	return $excode
 }
 
@@ -54,6 +76,10 @@ fn_makeInDir () {
     fn_dirEnsureClear "$dirbuildobj"
 	shopt -s nullglob
 	array=($srcFilesMask)
+	if [ ${#array[@]} -eq 0 ]; then
+		echo "    $me: Error: No target files with mask $srcFilesMask. Exit."
+		exit 1
+	fi
 	for file in "${array[@]}"
 	do
 		target=$(basename ${file})
@@ -72,7 +98,19 @@ fn_makeInDir () {
 	
 }
 
-me="build.sh"
+fn_cpresources() {
+	me="fn_cpresources"
+	name=$1
+	printf "\n"
+	fn_echobold "$me: Copying resource folder $name to exe dir"
+	cmd="cp -r $name $dirbuildexe"
+	echo $cmd
+	$cmd
+	excode=$?
+	return $excode
+}
+
+me="main script"
 
 if [ "$1" = "--make" ] || [ "$1" = "make" ]; then
 	if [ ! "$2" = "" ]; then

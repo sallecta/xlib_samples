@@ -3,12 +3,12 @@ Various xlib samples in C.
 
 ## Build
 ```console
-    ./build.sh make
+./build.sh make
 ```
     
 ## Clean 
 ```console
-    ./build.sh clean
+./build.sh clean
 ```
 
 ## Credits 

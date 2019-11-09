@@ -4,12 +4,12 @@ Various xlib samples in C.
 ## Build
     ```console
     ./build.sh make
-```
+    ```
     
 ## Clean 
-```console
+    ```console
     ./build.sh clean
-```
+    ```
 
 ## Credits 
 Stéphane List

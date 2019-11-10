@@ -54,7 +54,7 @@ fn_buildexe() {
         echo "    $me: No custom linker options file found [$customLinkerFile]"
 		optionsLinker=$optionsLinkerExeCommon
 	else
-		echo "    $me:  Custom llinker options file found [$customLinkerFile]"
+		echo "    $me:  Custom linker options file found [$customLinkerFile]"
 		source $customLinkerFile
 		fn_errorifempty "$optionsLinkerCustom" "optionsLinkerCustom"
 		fn_stoponerror "$?" $LINENO

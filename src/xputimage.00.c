@@ -89,8 +89,9 @@ int main (int argc, char **argv) {
    NSVGrasterizer *rast = NULL;
    
    if (argc < 2) {
-      printf ("Use: %s path.to.image\n", argv[0]);
-      exit(1);
+	printf ("Use: %s path.to.image\n", argv[0]);
+argv[1]="resources/nkscp1.0-graphicdesignstudio.svg";
+      //exit(1);
    }
    
    if ((data = stbi_load(argv[1], &w, &h, &n, 4)))

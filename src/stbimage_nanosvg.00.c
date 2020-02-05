@@ -6,13 +6,13 @@ goingnuts
 Xlib version of technosaurus xcb based image-viewer two post back:
 
 file set:
-    xputimage.00.c            - main file
-    xputimage.stb_image.h      - stb image single header library
-    xputimage.nanosvg.h			- memononen/nanosvg Simple stupid SVG parser 
-    xputimage.nanosvgrast.h	- memononen/nanosvg rasterizer
+    stbimage_nanosvg.00.c            - main file
+    stbimage_nanosvg.stb_image.h      - stb image single header library
+    stbimage_nanosvg.nanosvg.h			- memononen/nanosvg Simple stupid SVG parser 
+    stbimage_nanosvg.nanosvgrast.h	- memononen/nanosvg rasterizer
 
 compile:
-    gcc xputimage.00.c -o xputimage -L/usr/lib -L/usr/X11/lib -lX11 -lm
+    gcc stbimage_nanosvg.00.c -o stbimage_nanosvg -L/usr/lib -L/usr/X11/lib -lX11 -lm
  */
 
 /* Original notes*/
@@ -30,9 +30,9 @@ compile: gcc xputimage.c -o xputimage -L/usr/lib -L/usr/X11/lib -lX11 -lm
 */
 
 /* local versions of libraries file names */
-#define stb_image_h "xputimage.stb_image.h"
-#define nanosvg_h "xputimage.nanosvg.h"
-#define nanosvgrast_h "xputimage.nanosvgrast.h"
+#define stb_image_h "stbimage_nanosvg.stb_image.h"
+#define nanosvg_h "stbimage_nanosvg.nanosvg.h"
+#define nanosvgrast_h "stbimage_nanosvg.nanosvgrast.h"
 /* end local versions of libraries file names */
 
 

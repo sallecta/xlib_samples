@@ -72,8 +72,8 @@ fn_buildexe() {
 	return $excode
 }
 
-fn_makeInDir () {
-	me="fn_makeInDir"
+fn_buildFilesInPath () {
+	me="fn_buildFilesInPath"
     fn_dirEnsureClear "$dirbuildexe"
     fn_dirEnsureClear "$dirbuildobj"
 	shopt -s nullglob
@@ -87,11 +87,11 @@ fn_makeInDir () {
 		target=$(basename ${file})
 		target=${target%.$srcMainMarker}
 		target=${target##*/}
-		me="fn_makeInDir"
+		me="fn_buildFilesInPath"
 		fn_echobold "\n\n$me: found target: $target\n"
 		fn_buildobj "$target"
 		fn_stoponerror "$?" $LINENO
-		me="fn_makeInDir"
+		me="fn_buildFilesInPath"
 		fn_buildexe "$target"
 		fn_stoponerror "$?" $LINENO		  
 	done
@@ -129,7 +129,7 @@ if [ "$1" = "--make" ] || [ "$1" = "make" ]; then
 	else
 		fn_dirEnsureClear "$dirbuildexe"
 		fn_dirEnsureClear "$dirbuildobj"
-		fn_makeInDir
+		fn_buildFilesInPath
 	fi
 
 

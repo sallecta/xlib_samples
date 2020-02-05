@@ -47,7 +47,7 @@ fn_buildexe() {
 	me="fn_buildexe"
 	name=$1
 	printf "\n"
-	fn_echobold "    $me: Creating exe file from $name..$srcMainMarker"
+	fn_echobold "    $me: Creating exe file from $name.$srcMainMarker"
 
     customLinkerFile="$srcdir/$name.$srcCustomLinkerExeMark"
 	if [ ! -f "$customLinkerFile" ]; then

@@ -1,6 +1,10 @@
 # Xlib samples
 Various xlib samples in C.
 
+## Deps
+### Ubuntu
+- xputimage.00.c >> sudo apt install libxpm-dev
+
 ## Build
 ```console
 ./build.sh make

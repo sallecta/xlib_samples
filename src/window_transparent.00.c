@@ -1,4 +1,10 @@
+// https://stackoverflow.com/questions/13395179/empty-or-transparent-window-with-xlib-showing-border-lines-only
+// https://stackoverflow.com/a/13397150
+// https://stackoverflow.com/users/1404847/kassiopeia
+// kassiopeia
 
+// following code creates an X window with transparent background but still using the window decoration of your window manager.
+// It will only work though if your X11 and graphics hardware configuration supports visuals with a depth of 32 bit.
 
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>

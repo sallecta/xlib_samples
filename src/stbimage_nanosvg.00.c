@@ -88,20 +88,20 @@ int main (int argc, char **argv) {
    NSVGimage *shapes = NULL;
    NSVGrasterizer *rast = NULL;
    
-   if (argc < 2) {
+   if (argc < 2) { //if no image file name passed to command line argument, use the builtin
 	printf ("Use: %s path.to.image\n", argv[0]);
 argv[1]="resources/nkscp1.0-graphicdesignstudio.svg";
       //exit(1);
    }
    
-   if ((data = stbi_load(argv[1], &w, &h, &n, 4)))
+   if ((data = stbi_load(argv[1], &w, &h, &n, 4))) //if image file is supported by stb_image, use it
       ;
-   else if ((shapes = nsvgParseFromFile(argv[1], "px", 96.0f))) {
+   else if ((shapes = nsvgParseFromFile(argv[1], "px", 96.0f))) {//else, assume image file as svg, and try to rasterize it
       w = (int)shapes->width;
       h = (int)shapes->height;
       rast = nsvgCreateRasterizer();
       data = malloc(w*h*4);
-      nsvgRasterize(rast, shapes, 0,0,1, data, w, h, w*4);
+      nsvgRasterize(rast, shapes, 0,0,1, data, w, h, w*4); // write raster image to 'data' variable
    } else {
          printf("Unable to load image: %s\n", argv[0]);
       return -1;

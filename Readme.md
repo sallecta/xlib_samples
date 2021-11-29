@@ -3,16 +3,16 @@ Various xlib samples in C.
 
 ## Deps
 ### Ubuntu
-- xputimage.00.c >> sudo apt install libxpm-dev
+- xputimage.c >> sudo apt install libxpm-dev
 
 ## Build
 ```console
-./build.sh make
+./build.sh
 ```
     
 ## Clean 
 ```console
-./build.sh clean
+rm -r out
 ```
 
 ## Credits 
